@@ -19,5 +19,6 @@ namespace Blog.Models
         public DbSet<Blog.Models.Comentario> Comentario { get; set; }
 
         public DbSet<Blog.Models.Mensagem> Mensagem { get; set; }
+
     }
 }

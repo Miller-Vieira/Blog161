@@ -12,11 +12,11 @@ namespace Blog.Models
         public string Titulo { get; set; }
         public string Descricao { get; set; }
         public DateTime DataMensagem;
-        [ForeignKey("ComentarioId")]
-        public int ComentarioId { get; set; }
-        public Comentario Comentarios { get; set; }
+
+        [ForeignKey("CategoriaId")]
         public int CategoriaId { get; set; }
         public Categoria Categorias { get; set; }
 
+        public List<Comentario> Comentarios { get; set; }
     }
 }

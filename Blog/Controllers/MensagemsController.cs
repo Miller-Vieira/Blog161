@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Blog.Models;
+using Blog.ViewModel;
 
 namespace Blog.Controllers
 {
@@ -21,8 +22,20 @@ namespace Blog.Controllers
         // GET: Mensagems
         public async Task<IActionResult> Index()
         {
-            var blogContext = _context.Mensagem.Include(m => m.Categorias).Include(m => m.Comentarios);
-            return View(await blogContext.ToListAsync());
+            ViewData["CategoriaId"] = new SelectList(_context.Categoria, "CategoriaId", "Descricao");
+            ViewData["MensagemId"] = new SelectList(_context.Mensagem, "MensagemId", "MensagemId");
+
+            var comentarios = _context.Comentario.Include(c => c.Mensagens);
+            var mensagens = _context.Mensagem.Include(m => m.Categorias);
+
+            var viewMensagemComentario = new MensagemVM
+            {
+                Comentarios = await comentarios.ToListAsync(),
+                Mensagens = await mensagens.ToListAsync()
+            };
+
+            var blogContext = _context.Mensagem.Include(m => m.Categorias);
+            return View(viewMensagemComentario);
         }
 
         // GET: Mensagems/Details/5
@@ -35,7 +48,6 @@ namespace Blog.Controllers
 
             var mensagem = await _context.Mensagem
                 .Include(m => m.Categorias)
-                .Include(m => m.Comentarios)
                 .FirstOrDefaultAsync(m => m.MensagemId == id);
             if (mensagem == null)
             {
@@ -48,8 +60,7 @@ namespace Blog.Controllers
         // GET: Mensagems/Create
         public IActionResult Create()
         {
-            ViewData["CategoriaId"] = new SelectList(_context.Categoria, "CategoriaId", "CategoriaId");
-            ViewData["ComentarioId"] = new SelectList(_context.Comentario, "ComentarioId", "ComentarioId");
+            ViewData["CategoriaId"] = new SelectList(_context.Categoria, "CategoriaId", "Descricao");
             return View();
         }
 
@@ -58,7 +69,7 @@ namespace Blog.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("MensagemId,Titulo,Descricao,ComentarioId,CategoriaId")] Mensagem mensagem)
+        public async Task<IActionResult> Create([Bind("MensagemId,Titulo,Descricao,CategoriaId")] Mensagem mensagem)
         {
             if (ModelState.IsValid)
             {
@@ -66,8 +77,7 @@ namespace Blog.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["CategoriaId"] = new SelectList(_context.Categoria, "CategoriaId", "CategoriaId", mensagem.CategoriaId);
-            ViewData["ComentarioId"] = new SelectList(_context.Comentario, "ComentarioId", "ComentarioId", mensagem.ComentarioId);
+            ViewData["CategoriaId"] = new SelectList(_context.Categoria, "CategoriaId", "Descricao", mensagem.CategoriaId);
             return View(mensagem);
         }
 
@@ -84,8 +94,7 @@ namespace Blog.Controllers
             {
                 return NotFound();
             }
-            ViewData["CategoriaId"] = new SelectList(_context.Categoria, "CategoriaId", "CategoriaId", mensagem.CategoriaId);
-            ViewData["ComentarioId"] = new SelectList(_context.Comentario, "ComentarioId", "ComentarioId", mensagem.ComentarioId);
+            ViewData["CategoriaId"] = new SelectList(_context.Categoria, "CategoriaId", "Descricao", mensagem.CategoriaId);
             return View(mensagem);
         }
 
@@ -94,7 +103,7 @@ namespace Blog.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("MensagemId,Titulo,Descricao,ComentarioId,CategoriaId")] Mensagem mensagem)
+        public async Task<IActionResult> Edit(int id, [Bind("MensagemId,Titulo,Descricao,CategoriaId")] Mensagem mensagem)
         {
             if (id != mensagem.MensagemId)
             {
@@ -121,8 +130,7 @@ namespace Blog.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["CategoriaId"] = new SelectList(_context.Categoria, "CategoriaId", "CategoriaId", mensagem.CategoriaId);
-            ViewData["ComentarioId"] = new SelectList(_context.Comentario, "ComentarioId", "ComentarioId", mensagem.ComentarioId);
+            ViewData["CategoriaId"] = new SelectList(_context.Categoria, "CategoriaId", "Descricao", mensagem.CategoriaId);
             return View(mensagem);
         }
 
@@ -136,7 +144,6 @@ namespace Blog.Controllers
 
             var mensagem = await _context.Mensagem
                 .Include(m => m.Categorias)
-                .Include(m => m.Comentarios)
                 .FirstOrDefaultAsync(m => m.MensagemId == id);
             if (mensagem == null)
             {

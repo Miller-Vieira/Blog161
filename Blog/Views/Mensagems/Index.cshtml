@@ -1,53 +1,28 @@
-﻿@model IEnumerable<Blog.Models.Mensagem>
+﻿@model Blog.ViewModel.MensagemVM
 
 @{
     ViewData["Title"] = "Index";
 }
 
-<h2>Index</h2>
+@foreach (var mensagem in Model.Mensagens)
+{
+    <div class="panel panel-default form-group">
+        <div class="panel-heading"><h3>@mensagem.Titulo </h3></div>
+        <div class="panel-body">
+            <p> @mensagem.Descricao</p>
+            <a asp-controller="Comentarios" asp-action="Create" asp-route-id="@mensagem.MensagemId">Comentar</a>
+            <a asp-controller="Mensagems" asp-action="Create">Cadastrar Mensagem</a>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Titulo)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Descricao)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Comentarios)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Categorias)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Titulo)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Descricao)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Comentarios.ComentarioId)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Categorias.CategoriaId)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.MensagemId">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.MensagemId">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.MensagemId">Delete</a>
-            </td>
-        </tr>
+            @foreach (var comentario in Model.Comentarios)
+            {
+
+                <p><strong>@comentario.Descricao</strong></p>
+            }
+
+        </div>
+    </div>
 }
-    </tbody>
-</table>
+
+
+
+

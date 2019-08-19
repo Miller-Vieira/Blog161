@@ -9,8 +9,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Blog.Migrations
 {
     [DbContext(typeof(BlogContext))]
-    [Migration("20190808210816_data-base")]
-    partial class database
+    [Migration("20190819183634_asdad")]
+    partial class asdad
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -43,9 +43,13 @@ namespace Blog.Migrations
 
                     b.Property<string>("Descricao");
 
+                    b.Property<int>("MensagemId");
+
                     b.Property<string>("Titulo");
 
                     b.HasKey("ComentarioId");
+
+                    b.HasIndex("MensagemId");
 
                     b.ToTable("Comentario");
                 });
@@ -58,8 +62,6 @@ namespace Blog.Migrations
 
                     b.Property<int>("CategoriaId");
 
-                    b.Property<int>("ComentarioId");
-
                     b.Property<string>("Descricao");
 
                     b.Property<string>("Titulo");
@@ -68,9 +70,15 @@ namespace Blog.Migrations
 
                     b.HasIndex("CategoriaId");
 
-                    b.HasIndex("ComentarioId");
-
                     b.ToTable("Mensagem");
+                });
+
+            modelBuilder.Entity("Blog.Models.Comentario", b =>
+                {
+                    b.HasOne("Blog.Models.Mensagem", "Mensagens")
+                        .WithMany("Comentarios")
+                        .HasForeignKey("MensagemId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("Blog.Models.Mensagem", b =>
@@ -78,11 +86,6 @@ namespace Blog.Migrations
                     b.HasOne("Blog.Models.Categoria", "Categorias")
                         .WithMany("Mensagems")
                         .HasForeignKey("CategoriaId")
-                        .OnDelete(DeleteBehavior.Cascade);
-
-                    b.HasOne("Blog.Models.Comentario", "Comentarios")
-                        .WithMany("Mensagens")
-                        .HasForeignKey("ComentarioId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 #pragma warning restore 612, 618

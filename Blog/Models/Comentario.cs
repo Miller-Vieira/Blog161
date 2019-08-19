@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Blog.Models
 {
@@ -10,6 +11,9 @@ namespace Blog.Models
         public string Descricao { get; set; }
         public DateTime DataComentario;
         public string Autor { get; set; }
-        public virtual List<Mensagem> Mensagens { get; set; }
+
+        [ForeignKey("MensagemId")]
+        public int? MensagemId { get; set; }
+        public Mensagem Mensagens { get; set; }
     }
 }
