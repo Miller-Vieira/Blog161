@@ -4,7 +4,8 @@
     ViewData["Title"] = "Index";
 }
 
-@foreach (var mensagem in Model.Mensagens)
+
+@foreach (var mensagem in Model)
 {
     <div class="panel panel-default form-group">
         <div class="panel-heading"><h3>@mensagem.Titulo </h3></div>
@@ -12,16 +13,18 @@
             <p> @mensagem.Descricao</p>
             <a asp-controller="Comentarios" asp-action="Create" asp-route-id="@mensagem.MensagemId">Comentar</a>
             <a asp-controller="Mensagems" asp-action="Create">Cadastrar Mensagem</a>
-
-            @foreach (var comentario in Model.Comentarios)
-            {
-
-                <p><strong>@comentario.Descricao</strong></p>
-            }
-
+            <a asp-controller="Mensagems" asp-action="Delete">Excluir Mensagem</a>
+            <a asp-controller="Mensagems" asp-action="Edit">Editar Mensagem</a>*@
+            <h5 class="card-title">Título especial</h5>
+            <p class="card-text">Com suporte a texto embaixo, que funciona como uma introdução a um conteúdo adicional.</p>
         </div>
-    </div>
-}
+        }
+
+
+
+
+
+
 
 
 

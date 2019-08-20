@@ -30,7 +30,7 @@
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li><a asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>
+                    <li><a asp-area="" asp-controller="Home" asp-action="Index">Login</a></li>
                     <li><a asp-area="" asp-controller="Categorias" asp-action="Index">Categoria</a></li>
                     <li><a asp-area="" asp-controller="Comentarios" asp-action="Index">Comentario</a></li>
                     <li><a asp-area="" asp-controller="Mensagems" asp-action="Index">Mensagem</a></li>
@@ -41,12 +41,10 @@
 
     <partial name="_CookieConsentPartial" />
 
-    <div class="container body-content">
+    <div class="container-fluid body-content">
         @RenderBody()
         <hr />
-        <footer>
-            <p>&copy; 2019 - Blog</p>
-        </footer>
+        
     </div>
 
     <environment include="Development">
