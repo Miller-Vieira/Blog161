@@ -1,0 +1,65 @@
+﻿@model IEnumerable<Blog.Models.Mensagem>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h2>Mensagens</h2>
+
+<p>
+    <a asp-action="Create">Cadastrar</a>
+</p>
+<table class="table">
+    <thead>
+        <tr class="table">
+            <th>
+                @Html.DisplayNameFor(model => model.Titulo)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Descricao)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Categorias)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr  >
+            <td>
+                @Html.DisplayFor(modelItem => item.Titulo)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Descricao)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Categorias.CategoriaId)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.MensagemId">Editar</a> |
+                <a asp-action="Details" asp-route-id="@item.MensagemId">Detalhar</a> |
+                <a asp-action="Delete" asp-route-id="@item.MensagemId">Deletar</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+
+
+@section Scripts{ 
+    <style>
+     h2{
+         color:white
+     }
+
+     th{
+         color:forestgreen
+     }
+     td{
+         color:forestgreen
+     }
+
+    </style>
+
+}

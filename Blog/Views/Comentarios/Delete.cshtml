@@ -36,10 +36,34 @@
             @Html.DisplayFor(model => model.Mensagens.MensagemId)
         </dd>
     </dl>
-    
+
     <form asp-action="Delete">
         <input type="hidden" asp-for="ComentarioId" />
         <input type="submit" value="Delete" class="btn btn-default" /> |
         <a asp-action="Index">Back to List</a>
     </form>
 </div>
+
+@section Scripts {
+    <style>
+        h2 {
+            color: white
+        }
+
+        h3 {
+            color: blue
+        }
+
+        h4 {
+            color: blue
+        }
+
+        dt {
+            color: forestgreen
+        }
+        dd{
+            color:forestgreen
+        }
+    </style>
+
+}

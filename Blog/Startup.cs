@@ -11,6 +11,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.EntityFrameworkCore;
 using Blog.Models;
+using Blog.Middleware;
 
 namespace Blog
 {
@@ -56,6 +57,8 @@ namespace Blog
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseCookiePolicy();
+
+            app.UseNodeModules(env.ContentRootPath);
 
             app.UseMvc(routes =>
             {

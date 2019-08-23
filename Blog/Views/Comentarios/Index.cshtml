@@ -4,6 +4,7 @@
     ViewData["Title"] = "Index";
 }
 
+
 <h2>Comentarios</h2>
 
 <p>
@@ -43,11 +44,33 @@
                 @Html.DisplayFor(modelItem => item.Mensagens.MensagemId)
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.ComentarioId">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.ComentarioId">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.ComentarioId">Delete</a>
+                <a asp-action="Edit" asp-route-id="@item.ComentarioId">Editar</a> |
+                <a asp-action="Details" asp-route-id="@item.ComentarioId">Detalhar</a> |
+                <a asp-action="Delete" asp-route-id="@item.ComentarioId">Deletar</a>
             </td>
         </tr>
 }
     </tbody>
 </table>
+
+@section Scripts{ 
+
+    <style>
+
+      h2{
+        color:white
+      }
+
+      th{
+          color:forestgreen
+      }
+      td{
+          color:forestgreen
+      }
+
+
+
+    </style>
+
+
+}
